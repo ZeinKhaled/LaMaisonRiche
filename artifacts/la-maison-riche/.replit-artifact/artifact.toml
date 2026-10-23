@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "La Maison Riche"
+version = "1.0.0"
+id = "artifacts/la-maison-riche"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21339
+
+[services.development]
+run = "pnpm --filter @workspace/la-maison-riche run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/la-maison-riche", "run", "build" ]
+publicDir = "artifacts/la-maison-riche/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21339"
+BASE_PATH = "/"

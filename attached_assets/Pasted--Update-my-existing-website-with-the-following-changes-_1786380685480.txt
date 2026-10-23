@@ -1,0 +1,117 @@
+``
+Update my existing website with the following changes. 
+Do NOT rebuild from scratch, just add/modify:
+
+---
+
+## CHANGE 1 - IMAGE DISPLAY FIX:
+All product images should display fully without cropping.
+Change all product card images CSS to:
+```css
+.product-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: contain;
+  background: #f5f5f5;
+}
+```
+
+---
+
+## CHANGE 2 - ADMIN PAGE:
+
+Add a hidden admin panel accessible via: /admin
+Protected by password: (Azza@2026 )
+
+### Admin login screen:
+Simple centered password input + login button.
+Wrong password shows error. Correct password shows dashboard.
+
+### Admin Dashboard has 4 tabs:
+**TAB 1: "Products"**
+- List of ALL existing products from the PRODUCTS array
+- Each product row shows: thumbnail, name, category, edit button, delete button
+- Edit product opens a modal with:
+  * Multiple image slots - each slot has current image preview + "Upload Photo" button to replace it
+  * "Add Another Image" button to add more image slots (max 10)
+  * Remove image button (X) on each image
+  * Product name input
+  * Description textarea
+  * Category dropdown (dynamically built from CATEGORIES array)
+  * "Is New" checkbox (adds to New Collection section on homepage)
+  * "Suggested Product" dropdown - pick another product from the list
+  * Save button → updates the PRODUCTS array automatically
+
+**TAB 2: "Add New Product"**
+- Same form as edit but empty
+- Multiple image upload slots (start with 1, can add more)
+- Each upload slot: click → opens file picker → shows preview
+- Name input
+- Description textarea
+- Category dropdown
+- "Is New" checkbox
+- "Suggested Product" dropdown
+- "Add Product" button → pushes to PRODUCTS array and saves to localStorage
+
+**TAB 3: "Categories"**
+- List all categories with: category name, edit name button, delete button
+- "Add New Category" button → input for name → adds to CATEGORIES array
+- Deleting a category asks for confirmation
+
+**TAB 4: "Offers / Banners"**
+- Show the 3 offer cards that appear on homepage
+- Each offer card shows current image, title, price/description
+- "Upload Photo" button to change image
+- Text inputs to change title and description
+- Save button
+
+### Data persistence:
+ALL changes (products, categories, offers) must save to localStorage so they persist after page refresh. On page load, check localStorage first, fall back to default PRODUCTS array if empty.
+
+### Image upload handling:
+When admin uploads a photo, convert it to base64 and store in localStorage. Display it using the base64 string as image src.
+
+---
+
+## CHANGE 3 - PRODUCT DETAIL PAGE:
+When user clicks a product card, open a product detail page showing:
+- Large main image (first image)
+- Thumbnail row below - clicking a thumbnail swaps the main image
+- Product name (h1)
+- Description
+- "Call Us Now" button → opens WhatsApp
+- "Suggested Product" section at bottom showing the linked product card
+
+---
+
+## CHANGE 4 - EMPTY CATEGORY BEHAVIOR:
+If a category page has 0 products in the PRODUCTS array, automatically show:
+
+```html
+<div class="sold-out-box">
+  <h2>Sold Out For Now</h2>
+  <p>This collection is currently unavailable</p>
+  <a href="https://wa.me/+201277917937" class="btn">Call Us to Check</a>
+</div>
+```
+Styled centered, luxury feel, dark background.
+
+---
+
+## CHANGE 5 - ADMIN LINK:
+At the very bottom of the footer, add a tiny subtle link:
+```html
+<a href="/admin" style="color: #333; font-size: 11px;">Admin</a>
+```
+
+---
+
+## IMPORTANT NOTES:
+- Keep ALL existing design, colors, pages exactly as they are
+- Only add/modify what's mentioned above
+- Use localStorage for ALL data persistence (products, categories, offers, images as base64)
+- Admin panel should be fully functional without any backend or server
+- Make the admin UI clean and easy to use (not necessarily pretty, just functional)
+- All file/image uploads use <input type="file"> converted to base64
+- The PRODUCTS array and CATEGORIES array should be the single source of truth
+- Every category page reads from PRODUCTS array filtered by category name
